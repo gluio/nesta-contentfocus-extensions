@@ -1,4 +1,4 @@
-require 'pygments'
+require 'pygments.rb'
 require 'redcarpet'
 require 'tilt'
 require 'nesta/models'
@@ -6,6 +6,8 @@ require 'nesta/models'
 module Nesta
   module ContentFocus
     class HTMLRenderer < Redcarpet::Render::HTML
+      LANGUAGES = Pygments.lexers.map{|k,v| v[:aliases]}.flatten.sort
+
       def preprocess(document)
         @document = document
       end
@@ -23,7 +25,9 @@ module Nesta
       end
 
       def block_code(code, language)
-        Pygments.highlight(code, lexer: language)
+        options = {}
+        options.merge!(lexer: language) if LANGUAGES.include? language
+        Pygments.highlight(code, options)
       end
 
       def block_quote(content)
