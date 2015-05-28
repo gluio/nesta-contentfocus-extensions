@@ -5,7 +5,7 @@ require 'nesta-contentfocus-extensions/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "nesta-contentfocus-extensions"
-  spec.version       = Nesta::Plugin::ContentFocus::VERSION
+  spec.version       = Nesta::ContentFocus::VERSION
   spec.authors       = ["Glenn Gillen"]
   spec.email         = ["me@glenngillen.com"]
   spec.summary       = %q{A collection of extensions to the NestaCMS.}
