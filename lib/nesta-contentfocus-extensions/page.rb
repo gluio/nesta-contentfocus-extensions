@@ -1,3 +1,4 @@
+require 'pygments'
 require 'redcarpet'
 require 'tilt'
 require 'nesta/models'
@@ -19,6 +20,10 @@ module Nesta
         else
           ["<p>",content,"</p>"].join
         end
+      end
+
+      def block_code(code, language)
+        Pygments.highlight(code, lexer: language)
       end
 
       def block_quote(content)
