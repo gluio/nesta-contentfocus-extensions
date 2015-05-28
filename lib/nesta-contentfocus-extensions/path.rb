@@ -8,7 +8,7 @@ module Nesta
 
     def self.themes(*args)
       theme = args[0]
-      if Nesta::Config.theme && Nesta::Theme.const_get(theme.capitalize) && theme_dir = resolve_theme_path(theme)
+      if Nesta::Config.theme && Nesta::Theme.const_defined?(theme.capitalize) && theme_dir = resolve_theme_path(theme)
         File.expand_path(File.join(*args[1..-1]), theme_dir + "/../..")
       else
         pre_contentfocus_themes(*args)
