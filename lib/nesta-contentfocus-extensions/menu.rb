@@ -1,4 +1,5 @@
 require 'tempfile'
+require 'tilt'
 require 'nesta/models'
 
 module Nesta
