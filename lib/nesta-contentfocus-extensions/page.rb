@@ -1,4 +1,5 @@
 require 'redcarpet'
+require 'tilt'
 require 'nesta/models'
 
 module Nesta
