@@ -44,7 +44,6 @@ module Nesta
   class Page < FileModel
     def convert_to_html(format, scope, text)
       render_options = {
-        prettify: true,
         safe_links_only: true,
         with_toc_data: true
       }
