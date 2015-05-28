@@ -27,7 +27,8 @@ module Nesta
       def block_code(code, language)
         options = {}
         options.merge!(lexer: language) if LANGUAGES.include? language
-        Pygments.highlight(code, options)
+        highlighted_code = Pygments.highlight(code, options)
+        ["<code>", highlighted_code, "</code>".join
       end
 
       def block_quote(content)
