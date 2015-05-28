@@ -1,20 +1,24 @@
 require 'redcarpet'
 require 'nesta/models'
 
-class HTMLWithTocRender < Redcarpet::Render::HTML
-  def preprocess(document)
-    @document = document
-  end
+module Nesta
+  module ContentFocus
+    class HTMLRenderer < Redcarpet::Render::HTML
+      def preprocess(document)
+        @document = document
+      end
 
-  def paragraph(content)
-    if ['[TOC]'].include?(content)
-      toc_render = Redcarpet::Render::HTML_TOC.new(nesting_level: 2)
-      parser     = Redcarpet::Markdown.new(toc_render)
-      rendered = parser.render(@document)
-      rendered.sub!(/\A<ul>/, '<ul class="toc">')
-      return rendered
-    else
-      ["<p>",content,"</p>"].join
+      def paragraph(content)
+        if ['[TOC]'].include?(content)
+          toc_render = Redcarpet::Render::HTML_TOC.new(nesting_level: 2)
+          parser     = Redcarpet::Markdown.new(toc_render)
+          rendered = parser.render(@document)
+          rendered.sub!(/\A<ul>/, '<ul class="toc">')
+          return rendered
+        else
+          ["<p>",content,"</p>"].join
+        end
+      end
     end
   end
 end
@@ -28,7 +32,7 @@ module Nesta
         with_toc_data: true
       }
       markdown_options = {
-        renderer: HTMLWithTocRender.new(render_options),
+        renderer: Nesta::ContentFocus::HTMLRenderer.new(render_options),
         autolink: true,
         disable_indented_code_blocks: true,
         fenced_code_blocks: true,
