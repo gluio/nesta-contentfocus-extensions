@@ -21,14 +21,14 @@ module Nesta
       end
 
       def block_quote(content)
-        if content.match(/\A\.([a-z]+) /)
+        if content.match(/\A<p>\.([a-z]+) /)
           cssclass = $1
-          content.sub!(/\A\.([a-z]+) /)
-          [%Q{<div class="#{cssclass}">}, content, "</div>"].join
+          content.sub!(/\A\<p>.([a-z]+) /, "")
+          content.sub!(/<\/p>\z/, "")
+          [%Q{<div class="#{cssclass}"><p>}, content, "</p></div>"].join
         else
           ["<blockquote>", content, "</blockquote>"].join
         end
-
       end
     end
   end
