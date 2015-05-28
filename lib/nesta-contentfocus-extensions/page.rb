@@ -49,3 +49,4 @@ module Nesta
       return metadata('Intro Image') if metadata('Intro Image')
     end
   end
+end
