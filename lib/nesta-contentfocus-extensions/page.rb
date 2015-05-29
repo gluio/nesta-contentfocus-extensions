@@ -28,6 +28,8 @@ module Nesta
         options = {options: {
           linenos: true,
           cssclass: "hll",
+          lineanchors: "foo",
+          linespans: "foo",
           anchorlinenos: true
         }}
         options.merge!(lexer: language) if LANGUAGES.include? language
