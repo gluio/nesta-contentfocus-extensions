@@ -25,11 +25,14 @@ module Nesta
       end
 
       def block_code(code, language)
+        @code_count ||= 0
+        @code_count += 1
+        code_block_id = "code-example-#{@code_count}"
         options = {options: {
           linenos: true,
           cssclass: "hll",
-          lineanchors: "foo",
-          linespans: "foo",
+          lineanchors: code_block_id,
+          linespans: code_block_id,
           anchorlinenos: true
         }}
         options.merge!(lexer: language) if LANGUAGES.include? language
