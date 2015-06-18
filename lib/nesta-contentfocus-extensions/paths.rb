@@ -16,14 +16,14 @@ module Nesta
       def self.add_public_path(path)
         lock.synchronize do
           @public_paths ||= []
-          @public_paths << path
+          @public_paths.unshift(path)
         end
       end
 
       def self.add_view_path(path)
         lock.synchronize do
           @view_paths ||= []
-          @view_paths << path
+          @view_paths.unshift(path)
         end
       end
 
