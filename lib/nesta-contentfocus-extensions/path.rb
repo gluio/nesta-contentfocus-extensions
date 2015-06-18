@@ -1,5 +1,4 @@
 require "nesta/path"
-
 module Nesta
   class Path
     class << self

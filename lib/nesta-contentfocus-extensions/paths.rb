@@ -1,3 +1,4 @@
+require 'nesta/path'
 module Nesta
   module ContentFocus
     class Paths
