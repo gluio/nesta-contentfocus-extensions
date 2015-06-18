@@ -34,3 +34,6 @@ module Nesta
     end
   end
 end
+Nesta::ContentFocus::Paths.add_view_path(Nesta::Path.local("public"))
+Nesta::ContentFocus::Paths.add_public_path(Nesta::Path.local("views"))
+
