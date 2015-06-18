@@ -2,6 +2,12 @@ require 'nesta/app'
 module Nesta
   class App
     helpers do
+      def find_template(view_path, name, engine, &block)
+        views = [view_path]
+        views += Nesta::ContentFocus::Paths.view_paths
+        views.each {|v| super(v, name, engine, &block) }
+      end
+
       def body_class
         classes = [@body_class]
         if @page
