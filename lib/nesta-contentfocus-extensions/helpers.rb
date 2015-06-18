@@ -8,7 +8,7 @@ module Nesta
           classes << "landing-page" if @page.flagged_as? "landing-page"
           classes << "bare" if @page.flagged_as? "sign-up"
         end
-        classes.sort.uniq.join(" ")
+        classes.compact.sort.uniq.join(" ")
       end
     end
   end
