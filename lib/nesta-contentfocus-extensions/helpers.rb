@@ -1,3 +1,4 @@
+require 'nesta-contentfocus-extensions/paths'
 require 'nesta/app'
 module Nesta
   class App
