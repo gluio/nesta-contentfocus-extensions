@@ -1,3 +1,4 @@
+require 'sass_paths'
 require 'nesta/path'
 module Nesta
   module ContentFocus
@@ -26,6 +27,10 @@ module Nesta
           @view_paths ||= []
           @view_paths.unshift(path)
         end
+      end
+
+      def self.add_sass_path(path)
+        SassPaths.append(path)
       end
 
       private
