@@ -25,4 +25,4 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'tilt', '~> 1.4.0'
   spec.add_runtime_dependency 'pygments.rb', '~> 0.6.3'
   spec.add_runtime_dependency 'sass_paths', '~> 1.0.1'
-en
+end
