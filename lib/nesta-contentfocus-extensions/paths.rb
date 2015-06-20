@@ -30,6 +30,7 @@ module Nesta
       end
 
       def self.add_sass_path(path)
+        Sass.load_paths << path
         SassPaths.append(path)
       end
 
