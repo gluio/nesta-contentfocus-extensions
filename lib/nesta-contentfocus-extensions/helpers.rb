@@ -1,7 +1,6 @@
 require 'nesta-contentfocus-extensions/paths'
-require 'nesta/app'
 module Nesta
-  class App
+  class App < Sinatra::Base
     helpers do
       def find_template(view_path, name, engine, &block)
         views = [view_path]
