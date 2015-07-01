@@ -14,7 +14,7 @@ module Nesta
       if @full_menu.empty?
         menu_file = Tempfile.new('menu')
         categories = Page.find_all.map(&:categories).flatten.compact.uniq
-        categories.sort!(&:abspath)
+        categories.sort_by!(&:abspath)
         categories.each do |category|
           menu_file.write(category.abspath + "\n")
           category.pages.each do |sub_category|
