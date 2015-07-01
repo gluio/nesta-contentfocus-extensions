@@ -13,7 +13,9 @@ module Nesta
       @full_menu = pre_contentfocus_full_menu
       if @full_menu.empty?
         menu_file = Tempfile.new('menu')
-        Page.find_all.map(&:categories).flatten.compact.uniq.each do |category|
+        categories = Page.find_all.map(&:categories).flatten.compact.uniq
+        categories.sort!(&:abspath)
+        categories.each do |category|
           menu_file.write(category.abspath + "\n")
           category.pages.each do |sub_category|
             menu_file.write(Nesta::Menu::INDENT + sub_category.abspath + "\n")
