@@ -18,7 +18,7 @@ module Nesta
           Nesta::ContentFocus::Paths.add_view_path(view_path)
           Nesta::ContentFocus::Paths.add_view_path(File.expand_path(view_path + "/#{name}"))
         end
-        if path[:public]
+        if paths[:public]
         end
       end
     end
