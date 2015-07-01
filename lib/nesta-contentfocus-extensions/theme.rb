@@ -8,8 +8,8 @@ module Nesta
           view_path = File.expand_path(base_path + "/views")
           stylesheet_path = File.expand_path(base_path + "/stylesheets")
         end
-        stylesheet_path = paths[:styles]
-        view_path = paths[:views]
+        stylesheet_path = paths[:styles] if paths[:styles]
+        view_path = paths[:views] if paths[:views]
         if stylesheet_path
           Nesta::ContentFocus::Paths.add_sass_path(stylesheet_path)
           Nesta::ContentFocus::Paths.add_view_path(stylesheet_path)
