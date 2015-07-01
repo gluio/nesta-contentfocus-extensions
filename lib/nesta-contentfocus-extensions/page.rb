@@ -37,7 +37,7 @@ module Nesta
         }}
         options.merge!(lexer: language) if LANGUAGES.include? language
         code.gsub!(/^\\```/m, "```")
-        code.gsub!(/^\\\[([a-z]+)/im, "[\1")
+        code.gsub!(/^\\\[([a-z]+)/im, "[\\1")
         highlighted_code = Pygments.highlight(code, options)
         highlighted_code
       end
