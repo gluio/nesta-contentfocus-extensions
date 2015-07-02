@@ -1,4 +1,5 @@
 require 'sass_paths'
+require 'nesta/env'
 require 'nesta/path'
 module Nesta
   module ContentFocus
