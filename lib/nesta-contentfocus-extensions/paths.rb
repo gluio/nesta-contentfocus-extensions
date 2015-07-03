@@ -42,6 +42,4 @@ module Nesta
     end
   end
 end
-Nesta::ContentFocus::Paths.add_public_path(File.expand_path("public", Nesta::Env.root))
-Nesta::ContentFocus::Paths.add_view_path(File.expand_path("views", Nesta::Env.root))
 
