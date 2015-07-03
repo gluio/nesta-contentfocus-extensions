@@ -1,0 +1,84 @@
+@import "neat-helpers";
+
+// Typography
+$base-font-family: freight-text-pro, Merriweather, Georgia, Cambria, 'Times New Roman', Times, serif;
+$heading-font-family: jaf-bernino-sans, 'Open Sans' 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+$navigation-font-family: ff-meta-web-pro, $heading-font-family;
+
+// Font sizes
+$base-font-size: 22px;
+$heading-font-size: $base-font-size * 1.64;
+
+// Line height
+$base-line-height: $base-font-size * 1.5;
+$heading-line-height: $heading-font-size * 1.15;
+
+// Other typesetting hints
+$heading-letter-spacing: -2px*(23/32);
+
+// Other sizes
+$base-spacing: $base-line-height;
+$small-spacing: $base-spacing / 2;
+$base-z-index: 0;
+
+// Colors
+$success-color: #c1fca9;
+$notice-color: #a7d4f9;
+$error-color: #ffabb6;
+$alert-color: #ffe7ab;
+$base-accent-color: #262626;
+$action-color: #5cd02e;
+$base-button-color: $action-color;
+$hover-button-color: lighten($base-button-color, 10%);
+
+// Font colors
+$base-font-color: rgba(0, 0, 0, 0.8);
+$link-color: rgb(77, 204, 75);
+
+// Borders
+$base-border-radius: 5px;
+$base-border-color: lighten($base-font-color, 75%);
+$base-border: 1px solid $base-border-color;
+
+// Background colors
+$base-background-color: #fafafa;
+$secondary-background-color: tint($base-background-color, 75%);
+
+// Containers
+$max-width: 100%;
+
+// Screens
+$medium-screen: 600px;
+$large-screen: 900px;
+$medium-screen-up: new-breakpoint(min-width $medium-screen 4);
+$large-screen-up: new-breakpoint(min-width $large-screen 8);
+
+// Forms
+$form-font-family: $base-font-family;
+$form-font-size: $base-font-size;
+$form-border-radius: $base-border-radius;
+$form-border-color: $base-border-color;
+$form-border-color-hover: darken($form-border-color, 10);
+$form-border-color-focus: adjust-color($action-color, $lightness: -5%);
+$form-box-shadow: inset 0 1px rgba(#000, 0.06);
+$form-box-shadow-focus: $form-box-shadow, 0 0 5px adjust-color($action-color, $lightness: -5%, $alpha: -0.3);
+
+// Animations
+$base-duration: 150ms;
+$base-timing: ease;
+
+// Navigation
+$navigation-background-color: #262626;
+$navigation-color: rgba(255,255,255,0.7);
+
+// Hero
+$hero-color: $base-font-color;
+$hero-base-background-color: #fff;
+
+// Progress bar
+$progress-background-color: #9de381;
+$progress-border-color: #62cf33;
+$progress-meter-border-color: darken($progress-background-color, 20%);
+$progress-meter-border: 1px solid darken($progress-meter-border-color, 15%);
+$progress-meter-color: $progress-meter-border-color;
+$progress-background: lighten($progress-background-color, 20%);

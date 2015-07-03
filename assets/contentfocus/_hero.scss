@@ -1,0 +1,108 @@
+@import "bitters/extends/button";
+
+.hero {
+  $base-border-radius: 3px !default;
+  $action-color: #477DCA !default;
+  $large-screen: em(860) !default;
+  $hero-background-color: $base-background-color !default;
+  $hero-color: $base-font-color !default;
+  $gradient-angle: 10deg !default;
+
+  @if variable-exists(hero-image) {
+    @include background(url($hero-image), linear-gradient($gradient-angle, $hero-background-bottom, $hero-background-top), no-repeat $hero-background-top scroll);
+    background-size: auto,auto,100% 1000px,100% 1000px;
+  } @else if variable-exists(hero-background-top) and variable-exists(hero-background-bottom) {
+    @include background(linear-gradient($gradient-angle, $hero-background-bottom, $hero-background-top), no-repeat $hero-background-top scroll);
+    background-size: auto,auto,100% 1000px,100% 1000px;
+  } @else {
+    background-color: $hero-background-color;
+  }
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-bottom: 4em;
+  color: $hero-color;
+  display: table;
+  width: 100%;
+  position: relative;
+  height: 28em;
+  height: 95vh;
+  padding: $gutter;
+  margin-bottom: 3em;
+
+  .hero-logo img {
+    height: 3em;
+    margin-bottom: 2.5em;
+  }
+
+  .hero-inner {
+    @include outer-container;
+    @include clearfix;
+    color: $hero-color;
+    margin: auto;
+    padding: 3em;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
+
+    .hero-copy p, .hero-copy h1 {
+      text-align: center;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-copy p {
+      font-family: $base-font-family;
+      font-weight: normal;
+    }
+
+    .hero-copy {
+      text-align: center;
+
+      h1 {
+        font-size: 1.6em;
+        margin-bottom: .5em;
+        @include media($large-screen) {
+          font-size: 1.8em;
+        }
+      }
+
+      p {
+        margin: 0 auto 3em auto;
+        font-weight: 200;
+        line-height: 1.4em;
+        @include media($large-screen) {
+          font-size: 1.1em;
+        }
+      }
+    }
+    a.call-to-action {
+      @extend %button;
+      font-family: $heading-font-family;
+      font-weight: 700;
+      letter-spacing: $heading-letter-spacing;
+      @if variable-exists(hero-background-top) {
+        color: $hero-background-top;
+      } @else {
+        color: $hero-background-color;
+      }
+      background: $action-color;
+      padding: 0.75em 1em;
+      border-radius: 5px;
+      margin: 0.75em 0;
+      display: inline-block;
+      text-decoration: none;
+      &:focus, &:hover, &:active {
+        outline: none;
+        color: lighten($action-color, 40%);
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 5px lighten($action-color, 10%);
+      }
+      &:active {
+        background: darken($action-color, 10%);
+        cursor:progress;
+      }
+    }
+  }
+}
