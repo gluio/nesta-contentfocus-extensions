@@ -280,56 +280,60 @@ header.navigation {
     padding: .75em 1em;
   }
 
-  // Search bar
+// Search bar
 
   .search-bar {
     $search-bar-border-color: $base-border-color;
     $search-bar-border: 1px solid $search-bar-border-color;
-    $search-bar-background: lighten($search-bar-border-color, 10);
+    $search-bar-background: lighten($search-bar-border-color, 10%);
 
-    padding: .85em .6em;
-    width: 60%;
     float: left;
+    padding: 0.85em 0.85em 0.7em 0.6em;
+    width: 60%;
 
-    .search-and-submit {
+    form {
       position: relative;
 
       input[type=search] {
+        @include box-sizing(border-box);
         background: $navigation-search-background;
-        border: $navigation-search-border;
-        padding: .6em .8em;
-        font-size: .9em;
-        font-style: italic;
-        color: $navigation-color;
         border-radius: $base-border-radius * 2;
+        border: $navigation-search-border;
+        color: $navigation-color;
+        font-size: 0.9em;
+        font-style: italic;
         margin: 0;
+        padding: 0.5em 0.8em;
+        width: 100%;
 
-        @include media($large-screen) {
+        @include media($horizontal-bar-mode) {
           width: 100%;
         }
       }
 
       button[type=submit] {
-        @include button(flat, $navigation-search-background);
-        position: absolute;
-        top: 0.3em;
-        right: 0.3em;
+        background: $navigation-search-background;
+        border: none;
         bottom: 0.3em;
         left: auto;
         outline: none;
-        padding: 0 15px;
+        padding: 0 9px;
+        position: absolute;
+        right: 0.3em;
+        top: 0.3em;
 
         img {
           height: 12px;
-          opacity: .7;
+          opacity: 0.7;
+          padding: 1px;
         }
       }
     }
 
     @include media($horizontal-bar-mode) {
-      width: 16em;
-      position: relative;
       display: inline-block;
+      position: relative;
+      width: 16em;
 
       input {
         @include box-sizing(border-box);
