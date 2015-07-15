@@ -7,6 +7,8 @@ require "nesta-contentfocus-extensions/overrides"
 require "nesta-contentfocus-extensions/page"
 require "nesta-contentfocus-extensions/path"
 require "nesta-contentfocus-extensions/paths"
+require "nesta-contentfocus-extensions/renderer"
+require "nesta-contentfocus-extensions/routes"
 require "nesta-contentfocus-extensions/theme"
 Nesta::ContentFocus::Paths.add_sass_path(File.expand_path("../assets/stylesheets", File.dirname(__FILE__)))
 Nesta::ContentFocus::Paths.add_public_path(File.expand_path("public", Nesta::Env.root))
