@@ -5,7 +5,7 @@ module Nesta
         app.instance_eval do
           get '/css/*.css' do
             content_type 'text/css', charset: 'utf-8'
-            sheet = params[:splat].join("/")
+            sheet = params[:splat].join('/')
             stylesheet(sheet.to_sym)
           end
         end

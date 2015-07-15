@@ -1,4 +1,4 @@
-require "nesta/path"
+require 'nesta/path'
 module Nesta
   class Path
     class << self
@@ -7,17 +7,24 @@ module Nesta
 
     def self.themes(*args)
       theme = args[0]
-      if Nesta::Config.theme && Nesta::Theme.const_defined?(theme.capitalize) && theme_dir = resolve_theme_path(theme)
-        File.expand_path(File.join(*args[1..-1]), theme_dir + "/../..")
+      if theme_loaded? && theme_gemified?
+        theme_dir = resolve_theme_path(theme)
+        File.expand_path(File.join(*args[1..-1]), theme_dir + '/../..')
       else
         pre_contentfocus_themes(*args)
       end
     end
 
     def self.resolve_theme_path(theme)
-      if path = $".grep(%r{nesta-theme-#{theme}\.rb})
-        path.first
-      end
+      theme_gemified?(theme).first if theme_gemified?(theme)
+    end
+
+    def self.theme_gemified?(theme)
+      $LOADED_FEATURES.grep(/nesta-theme-#{theme}\.rb/)
+    end
+
+    def self.theme_loaded?(theme)
+      Nesta::Config.theme && Nesta::Theme.const_defined?(theme.capitalize)
     end
   end
 end

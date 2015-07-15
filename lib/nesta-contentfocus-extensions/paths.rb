@@ -35,11 +35,18 @@ module Nesta
         SassPaths.append(path)
       end
 
-      private
+      def self.setup_base_app
+        app_root = Nesta::Env.root
+        asset_base = File.expand_path('../../assets', File.dirname(__FILE__))
+        style_path = File.join(asset_base, 'stylesheets')
+        add_sass_path(style_path)
+        add_public_path(File.expand_path('public', app_root))
+        add_view_path(File.expand_path('views', app_root))
+      end
+
       def self.lock
         @lock || Mutex.new
       end
     end
   end
 end
-

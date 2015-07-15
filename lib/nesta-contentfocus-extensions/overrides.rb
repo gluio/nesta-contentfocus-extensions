@@ -2,6 +2,7 @@ require 'nesta/overrides'
 module Nesta
   module Overrides
     private
+
     def self.render_options(template, *engines)
       Nesta::ContentFocus::Paths.view_paths.each do |path|
         engines.each do |engine|
