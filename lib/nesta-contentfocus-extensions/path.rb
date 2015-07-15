@@ -7,7 +7,7 @@ module Nesta
 
     def self.themes(*args)
       theme = args[0]
-      if theme_loaded? && theme_gemified?
+      if theme_loaded?(theme) && theme_gemified?(theme)
         theme_dir = resolve_theme_path(theme)
         File.expand_path(File.join(*args[1..-1]), theme_dir + '/../..')
       else
