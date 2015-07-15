@@ -1,25 +1,14 @@
-require 'pygments.rb'
-require 'redcarpet'
+require 'rouge'
+require 'kramdown'
 require 'tilt'
+Tilt.prefer Tilt::KramdownTemplate
+
 module Nesta
   module ContentFocus
-    class HTMLRenderer < Redcarpet::Render::HTML
-      LANGUAGES = Pygments.lexers.map { |_, v| v[:aliases] }.flatten.sort
+    class HTMLRenderer < Kramdown::Document
 
       def preprocess(document)
         @document = document
-      end
-
-      def paragraph(content)
-        if ['[TOC]'].include?(content)
-          toc_render = Redcarpet::Render::HTML_TOC.new(nesting_level: 2)
-          parser     = Redcarpet::Markdown.new(toc_render)
-          rendered = parser.render(@document)
-          rendered.sub!(/\A<ul>/, '<ul class="toc">')
-          return rendered
-        else
-          ['<p>', content, '</p>'].join
-        end
       end
 
       def block_code(code, language)
@@ -37,7 +26,7 @@ module Nesta
           linespans: id,
           anchorlinenos: true
         } }
-        options.merge!(lexer: language) if LANGUAGES.include? language
+        #options.merge!(lexer: language) if LANGUAGES.include? language
         options
       end
 

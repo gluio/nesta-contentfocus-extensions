@@ -13,7 +13,6 @@ module Nesta
 
     def markdown_options
       {
-        renderer: Nesta::ContentFocus::HTMLRenderer.new(renderer_options),
         autolink: true,
         disable_indented_code_blocks: true,
         fenced_code_blocks: true,
