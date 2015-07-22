@@ -21,13 +21,9 @@ module Nesta
         no_intra_emphasis: true,
         quote: true,
         strikethrough: true,
+        syntax_highlighter: :rouge,
         superscript: true,
         tables: true }
-    end
-
-    def renderer_options
-      { safe_links_only: true,
-        with_toc_data: true }
     end
   end
 end
