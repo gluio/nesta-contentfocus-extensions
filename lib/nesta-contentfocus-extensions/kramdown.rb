@@ -6,8 +6,6 @@ Tilt.register Tilt::KramdownTemplate, 'markdown', 'mkd', 'md'
 Tilt.prefer Tilt::KramdownTemplate
 
 module Kramdown
-<<<<<<< HEAD
-=======
   module SyntaxHighlighter
     module Rouge
       def self.call(converter, text, lang, type, _unused_opts)
@@ -24,7 +22,6 @@ module Kramdown
     end
   end
 
->>>>>>> 6a06623... Remove debug.
   module Converter
     class Html < Base
       alias_method :pre_headstartup_convert_ul, :convert_ul
