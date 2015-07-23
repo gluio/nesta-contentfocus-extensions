@@ -1,6 +1,8 @@
 require 'rouge'
 require 'kramdown'
 require 'tilt'
+
+Tilt.register Tilt::KramdownTemplate, 'markdown', 'mkd', 'md'
 Tilt.prefer Tilt::KramdownTemplate
 
 module Kramdown
