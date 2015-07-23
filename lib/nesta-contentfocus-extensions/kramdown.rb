@@ -57,7 +57,7 @@ module Kramdown
       end
 
       def convert_blockquote(el, indent)
-        if el.attr['class'] == 'testimonial'
+        if ['testimonial', 'cited'].include? el.attr['class']
           p = el.children.detect{ |c| c.type == :p }
           if p
             mdash_idx = p.children.index{ |c| c.type == :typographic_sym && c.value == :mdash }
