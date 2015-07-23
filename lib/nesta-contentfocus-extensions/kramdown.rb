@@ -4,6 +4,25 @@ require 'tilt'
 Tilt.prefer Tilt::KramdownTemplate
 
 module Kramdown
+<<<<<<< HEAD
+=======
+  module SyntaxHighlighter
+    module Rouge
+      def self.call(converter, text, lang, type, _unused_opts)
+        opts = converter.options[:syntax_highlighter_opts].dup
+        lexer = ::Rouge::Lexer.find_fancy(lang || opts[:default_lang], text)
+        return nil unless lexer
+        if type == :span
+          opts[:wrap] = false
+          opts[:line_numbers] = false
+        end
+        formatter = (opts.delete(:formatter) || ::Rouge::Formatters::HTML).new(opts)
+        formatter.format(lexer.lex(text))
+      end
+    end
+  end
+
+>>>>>>> 6a06623... Remove debug.
   module Converter
     class Html < Base
       alias_method :pre_headstartup_convert_ul, :convert_ul
