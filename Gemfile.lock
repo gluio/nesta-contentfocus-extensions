@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    nesta-contentfocus-extensions (0.0.1)
+    nesta-contentfocus-extensions (0.0.2)
       kramdown (~> 1.5.0)
       nesta (>= 0.11.0)
       rouge (~> 1.9.1)
