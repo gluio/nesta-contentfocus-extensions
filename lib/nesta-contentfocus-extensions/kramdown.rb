@@ -2,6 +2,7 @@ require 'rouge'
 require 'kramdown'
 require 'kramdown/converter'
 require 'tilt'
+require 'nesta/models'
 
 Tilt.register Tilt::KramdownTemplate, 'markdown', 'mkd', 'md'
 Tilt.prefer Tilt::KramdownTemplate
