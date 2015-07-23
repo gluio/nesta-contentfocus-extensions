@@ -12,8 +12,6 @@ module Kramdown
       def self.call(converter, text, lang, type, _unused_opts)
         opts = converter.options[:syntax_highlighter_opts].dup
         lexer = ::Rouge::Lexer.find_fancy(lang || opts[:default_lang], text)
-        STDOUT.puts "Code\n\n"
-        STDOUT.puts type
         return nil unless lexer
         if type == :span
           opts[:wrap] = false
