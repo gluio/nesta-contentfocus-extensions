@@ -63,13 +63,10 @@ module Kramdown
             mdash_idx = p.children.index{ |c| c.type == :typographic_sym && c.value == :mdash }
             if mdash_idx
               next_el = p.children[mdash_idx + 1]
-              if (next_el.type == :text) && (next_el.value.strip.empty?) && (p.children[mdash_idx + 2].type == :a)
-                p.children.delete_at(mdash_idx)
-                cite = Element.new(:html_element, 'cite')
-                cite.children = p.children.pop(p.children.size - mdash_idx)
-                p.children.push cite
-              elsif next_el.type == :a
-              end
+              p.children.delete_at(mdash_idx)
+              cite = Element.new(:html_element, 'cite')
+              cite.children = p.children.pop(p.children.size - mdash_idx)
+              p.children.push cite
             end
           end
         end
