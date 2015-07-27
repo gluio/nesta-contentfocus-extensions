@@ -15,11 +15,9 @@ module Kramdown
         opts = converter.options[:syntax_highlighter_opts].dup
         lexer = ::Rouge::Lexer.find_fancy(lang || opts[:default_lang], text)
         return nil unless lexer
-        opts[:formatter] ||= ::Rouge::Formatters::HTMLLinewise
         if type == :span
           opts[:wrap] = false
           opts[:line_numbers] = false
-          opts[:formatter] = ::Rouge::Formatters::HTML
         end
         formatter = (opts.delete(:formatter) || ::Rouge::Formatters::HTML).new(opts)
         formatter.format(lexer.lex(text))
