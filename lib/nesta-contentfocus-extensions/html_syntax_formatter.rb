@@ -2,7 +2,7 @@ require 'nesta-contentfocus-extensions/kramdown/kramdown'
 require 'nesta-contentfocus-extensions/rouge/formatters/html'
 module Nesta
   module ContentFocus
-    class HTMLSyntaxFormatter
+    class HTMLSyntaxFormatter < ::Rouge::Formatters::HTML
     end
   end
 end

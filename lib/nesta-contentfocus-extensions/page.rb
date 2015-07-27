@@ -16,7 +16,8 @@ module Nesta
         auto_id_stripping: true,
         auto_ids: true,
         syntax_highlighter: :rouge,
-        syntax_highlighter_opts: syntax_highlight_options
+        syntax_highlighter_opts: syntax_highlight_options,
+        formatter: Nesta::ContentFocus::HTMLSyntaxFormatter
       }
       #{
       #  autolink: true,
