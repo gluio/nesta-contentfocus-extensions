@@ -87,6 +87,25 @@ module Kramdown
         [open, content, close].join
       end
     end
+
+    #  def block_code(code, language)
+    #    @code_count ||= 0
+    #    @code_count += 1
+    #    code_block_id = "code-example-#{@code_count}"
+    #    syntax_highlight(code, language, code_block_id)
+    #  end
+
+    #  def syntax_highlight_options(language, id)
+    #    options = { options: {
+    #      linenos: true,
+    #      cssclass: 'hll',
+    #      lineanchors: id,
+    #      linespans: id,
+    #      anchorlinenos: true
+    #    } }
+    #    #options.merge!(lexer: language) if LANGUAGES.include? language
+    #    options
+    #  end
   end
 end
 
