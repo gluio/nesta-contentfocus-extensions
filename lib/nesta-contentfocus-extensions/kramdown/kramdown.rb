@@ -20,6 +20,7 @@ module Kramdown
           opts[:line_numbers] = false
         end
         formatter = (opts.delete(:formatter) || ::Rouge::Formatters::HTML).new(opts)
+        formatter = ::Rouge::Formatters::HTMLLinewise.new(formatter, opts) if opts[:line_numbers]
         formatter.format(lexer.lex(text))
       end
     end
