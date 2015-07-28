@@ -128,7 +128,7 @@ module Kramdown
       end
 
       def highlight_code(text, lang, type, opts = {})
-        opts[:block_id] = "-#{Digest::SHA1.hexdigest(text)[0..6]}-" if type == :block
+        opts[:block_id] = "-#{Digest::SHA1.hexdigest(text)[0...6]}-" if type == :block
         pre_headstartup_convert_highlight_code(text, lang, type, opts)
       end
 
