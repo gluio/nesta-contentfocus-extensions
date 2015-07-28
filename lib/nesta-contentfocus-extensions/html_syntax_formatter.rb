@@ -14,7 +14,7 @@ module Nesta
           num_lines += val.scan(/\n/).size
           val.scan /\n|[^\n]+/ do |s|
             if s == "\n"
-              formatted << %Q{</span>\n<span class="line">}
+              formatted << %Q{</span>\n<span class="line" id="LC#{num_lines}">}
             else
               span(tok, s) { |str| formatted << str }
             end
