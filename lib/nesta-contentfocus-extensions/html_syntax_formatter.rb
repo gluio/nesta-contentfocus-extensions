@@ -9,15 +9,15 @@ module Nesta
         formatted = ''
         formatted << %Q{<span class="line" id="LC#{@start_line+num_lines}">}
         tokens.each do |tok, val|
-          last_val = val
+          num_lines += val.scan(/\n/).size
           val.scan /\n|[^\n]+/ do |s|
             if s == "\n"
-              num_lines += val.scan(/\n/).size
               formatted << %Q{</span>\n<span class="line" id="LC#{@start_line+num_lines}">}
             else
               span(tok, s) { |str| formatted << str }
             end
           end
+          last_val = val
         end
         formatted << '</span>'
 
