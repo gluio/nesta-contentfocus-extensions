@@ -10,6 +10,45 @@ Tilt.register Tilt::KramdownTemplate, 'markdown', 'mkd', 'md'
 Tilt.prefer Tilt::KramdownTemplate
 
 module Kramdown
+  module Converter
+    class Html < Base
+      def convert_mark(el, indent)
+        format_as_span_html(el.type, el.attr, inner(el, indent))
+      end
+    end
+  end
+end
+
+require 'kramdown/parser/kramdown'
+module Nesta
+  module ContentFocus
+    class MarkdownParser < Kramdown::Parser::Kramdown
+
+      def initialize(source, options)
+        super
+        @span_parsers.unshift(:highlight)
+      end
+
+      HIGHLIGHT_START = /(?:==?)/
+
+      def parse_highlight
+        start_line_number = @src.current_line_number
+        saved_pos = @src.save_pos
+        result = @src.scan(HIGHLIGHT_START)
+        el = Element.new(:mark, nil, nil, :location => start_line_number)
+        stop_re = /#{Regexp.escape("==")}/
+        parse_spans(el, stop_re) do
+          (!@src.match?(/#{Regexp.escape("==")}[[:alnum:]]/)) && el.children.size > 0
+        end
+        @src.scan(stop_re)
+        @tree.children << el
+      end
+      define_parser(:highlight, HIGHLIGHT_START, '==')
+    end
+  end
+end
+
+module Kramdown
   module SyntaxHighlighter
     module Rouge
       def self.call(converter, text, lang, type, block_opts)

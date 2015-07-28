@@ -17,7 +17,8 @@ module Nesta
         auto_ids: true,
         autolink: true,
         syntax_highlighter: :rouge,
-        syntax_highlighter_opts: syntax_highlight_options
+        syntax_highlighter_opts: syntax_highlight_options,
+        input: 'Nesta::ContentFocus::MarkdownParser'
       }
       #{
       #  autolink: true,
