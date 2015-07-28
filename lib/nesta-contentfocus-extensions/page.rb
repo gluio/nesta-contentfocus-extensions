@@ -1,4 +1,4 @@
-require 'nesta-contentfocus-extensions/renderer'
+require 'nesta-contentfocus-extensions/html_syntax_formatter'
 module Nesta
   class Page < FileModel
     def convert_to_html(format, scope, text)
