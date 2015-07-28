@@ -10,8 +10,8 @@ module Nesta
         formatted << %Q{<span class="line" id="LC#{@start_line+num_lines}">}
         tokens.each do |tok, val|
           last_val = val
-          num_lines += val.scan(/\n/).size
           val.scan /\n|[^\n]+/ do |s|
+            num_lines += 1
             if s == "\n"
               formatted << %Q{</span>\n<span class="line" id="LC#{@start_line+num_lines}">}
             else
