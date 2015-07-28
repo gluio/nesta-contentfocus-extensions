@@ -1,3 +1,4 @@
+require 'digest/sha1'
 require 'rouge'
 require 'rouge/formatters/html_linewise'
 require 'kramdown'
@@ -35,7 +36,7 @@ module Kramdown
       alias_method :pre_headstartup_convert_ul, :convert_ul
       alias_method :pre_headstartup_convert_blockquote, :convert_blockquote
       alias_method :pre_headstartup_convert_header, :convert_header
-      alias_method :pre_headstartup_convert_codeblock, :convert_codeblock
+      alias_method :pre_headstartup_convert_highlight_code, :highlight_code
 
       def convert_ul(el, indent)
         if ['benefits', 'how', 'features'].include? el.attr['class']
@@ -86,6 +87,7 @@ module Kramdown
         [open, content, close].join
       end
 
+<<<<<<< HEAD
       def convert_codeblock(el, indent)
         attr = el.attr.dup
         lang = extract_code_language!(attr)
@@ -112,6 +114,11 @@ module Kramdown
           code_attr['class'] = "language-#{lang}" if lang
           "#{' '*indent}<pre#{html_attributes(attr)}><code#{html_attributes(code_attr)}>#{result}\n</code></pre>\n"
         end
+=======
+      def highlight_code(text, lang, type, opts = {})
+        opts[:block_id] = Digest::SHA1.hexdigest(text) if type == :block
+        pre_headstartup_convert_highlight_code(text, lang, type, opts)
+>>>>>>> fb81d9e... Generate hash based on code content.
       end
 
     end
