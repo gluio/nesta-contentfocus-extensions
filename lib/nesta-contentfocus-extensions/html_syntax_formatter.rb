@@ -7,12 +7,17 @@ module Nesta
         num_lines = 0
         last_val = ''
         formatted = ''
-        formatted << %Q{<span class="line" id="LC#{@start_line+num_lines}">}
+        line_closed = true
         tokens.each do |tok, val|
           num_lines += val.scan(/\n/).size
           val.scan /\n|[^\n]+/ do |s|
+            if line_closed
+              formatted << %Q{<span class="line" id="LC#{@start_line+num_lines}">}
+              line_closed = false
+            end
             if s == "\n"
-              formatted << %Q{</span>\n<span class="line" id="LC#{@start_line+num_lines}">}
+              formatted << %Q{</span>\n}
+              line_closed = true
             else
               span(tok, s) { |str| formatted << str }
             end
