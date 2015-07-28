@@ -12,8 +12,9 @@ Tilt.prefer Tilt::KramdownTemplate
 module Kramdown
   module SyntaxHighlighter
     module Rouge
-      def self.call(converter, text, lang, type, _unused_opts)
+      def self.call(converter, text, lang, type, block_opts)
         opts = converter.options[:syntax_highlighter_opts].dup
+        opts.merge!(block_opts)
         lexer = ::Rouge::Lexer.find_fancy(lang || opts[:default_lang], text)
         return nil unless lexer
         if type == :span
@@ -87,38 +88,9 @@ module Kramdown
         [open, content, close].join
       end
 
-<<<<<<< HEAD
-      def convert_codeblock(el, indent)
-        attr = el.attr.dup
-        lang = extract_code_language!(attr)
-        highlighted_code = highlight_code(el.value, lang, :block)
-
-        if highlighted_code
-          add_syntax_highlighter_to_class_attr(attr)
-          "#{' '*indent}<div#{html_attributes(attr)}>#{highlighted_code}#{' '*indent}</div>\n"
-        else
-          result = escape_html(el.value)
-          result.chomp!
-          if el.attr['class'].to_s =~ /\bshow-whitespaces\b/
-            result.gsub!(/(?:(^[ \t]+)|([ \t]+$)|([ \t]+))/) do |m|
-              suffix = ($1 ? '-l' : ($2 ? '-r' : ''))
-              m.scan(/./).map do |c|
-                case c
-                when "\t" then "<span class=\"ws-tab#{suffix}\">\t</span>"
-                when " " then "<span class=\"ws-space#{suffix}\">&#8901;</span>"
-                end
-              end.join('')
-            end
-          end
-          code_attr = {}
-          code_attr['class'] = "language-#{lang}" if lang
-          "#{' '*indent}<pre#{html_attributes(attr)}><code#{html_attributes(code_attr)}>#{result}\n</code></pre>\n"
-        end
-=======
       def highlight_code(text, lang, type, opts = {})
-        opts[:block_id] = Digest::SHA1.hexdigest(text) if type == :block
+        opts[:block_id] = "-#{Digest::SHA1.hexdigest(text)[0..6]}-" if type == :block
         pre_headstartup_convert_highlight_code(text, lang, type, opts)
->>>>>>> fb81d9e... Generate hash based on code content.
       end
 
     end

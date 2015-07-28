@@ -2,6 +2,12 @@ require 'nesta-contentfocus-extensions/kramdown/kramdown'
 module Nesta
   module ContentFocus
     class HTMLSyntaxFormatter < ::Rouge::Formatters::HTML
+      attr_reader :block_id
+
+      def initialize(opts = {})
+        @block_id = opts.fetch(:block_id, "")
+        super(opts)
+      end
 
       def stream_tableized(tokens)
         num_lines = 0
@@ -12,7 +18,8 @@ module Nesta
           num_lines += val.scan(/\n/).size
           val.scan /\n|[^\n]+/ do |s|
             if line_closed
-              formatted << %Q{<span class="line" id="LC#{@start_line+num_lines}">}
+              line_id = ["LC", block_id, (@start_line+num_lines)].join
+              formatted << %Q{<span class="line" id="#{line_id}">}
               line_closed = false
             end
             if s == "\n"
@@ -34,8 +41,9 @@ module Nesta
 
         numbers = '<pre class="lineno">'
         (@start_line..num_lines+@start_line-1).to_a.map do |i|
-          text = %Q{<a href="#L#{i}">#{i}</a>}
-          numbers << %Q{<span class="line" id="L#{i}">#{text}</span>\n}
+          line_id = ["L", block_id, i].join
+          text = %Q{<a href="##{line_id}">#{i}</a>}
+          numbers << %Q{<span class="line" id="#{line_id}">#{text}</span>\n}
         end
         numbers << '</pre>'
 
