@@ -11,8 +11,8 @@ module Nesta
         tokens.each do |tok, val|
           last_val = val
           val.scan /\n|[^\n]+/ do |s|
-            num_lines += 1
             if s == "\n"
+              num_lines += val.scan(/\n/).size
               formatted << %Q{</span>\n<span class="line" id="LC#{@start_line+num_lines}">}
             else
               span(tok, s) { |str| formatted << str }
