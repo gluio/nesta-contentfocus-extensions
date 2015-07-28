@@ -35,6 +35,7 @@ module Kramdown
       alias_method :pre_headstartup_convert_ul, :convert_ul
       alias_method :pre_headstartup_convert_blockquote, :convert_blockquote
       alias_method :pre_headstartup_convert_header, :convert_header
+      alias_method :pre_headstartup_convert_codeblock, :convert_codeblock
 
       def convert_ul(el, indent)
         if ['benefits', 'how', 'features'].include? el.attr['class']
@@ -84,6 +85,35 @@ module Kramdown
         end
         [open, content, close].join
       end
+
+      def convert_codeblock(el, indent)
+        attr = el.attr.dup
+        lang = extract_code_language!(attr)
+        highlighted_code = highlight_code(el.value, lang, :block)
+
+        if highlighted_code
+          add_syntax_highlighter_to_class_attr(attr)
+          "#{' '*indent}<div#{html_attributes(attr)}>#{highlighted_code}#{' '*indent}</div>\n"
+        else
+          result = escape_html(el.value)
+          result.chomp!
+          if el.attr['class'].to_s =~ /\bshow-whitespaces\b/
+            result.gsub!(/(?:(^[ \t]+)|([ \t]+$)|([ \t]+))/) do |m|
+              suffix = ($1 ? '-l' : ($2 ? '-r' : ''))
+              m.scan(/./).map do |c|
+                case c
+                when "\t" then "<span class=\"ws-tab#{suffix}\">\t</span>"
+                when " " then "<span class=\"ws-space#{suffix}\">&#8901;</span>"
+                end
+              end.join('')
+            end
+          end
+          code_attr = {}
+          code_attr['class'] = "language-#{lang}" if lang
+          "#{' '*indent}<pre#{html_attributes(attr)}><code#{html_attributes(code_attr)}>#{result}\n</code></pre>\n"
+        end
+      end
+
     end
 
     #  def block_code(code, language)
