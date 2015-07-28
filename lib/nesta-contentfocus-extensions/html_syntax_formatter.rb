@@ -28,9 +28,11 @@ module Nesta
           span(Token::Tokens::Text::Whitespace, "\n") { |str| formatted << str }
         end
 
-        # generate a string of newline-separated line numbers for the gutter>
-        numbers = %<<pre class="lineno">#{(@start_line..num_lines+@start_line-1)
-          .to_a.join("\n")}</pre>>
+        numbers = '<pre class="lineno">'
+        (@start_line..num_lines+@start_line-1).to_a.map do |i|
+          numbers << %Q{<span class="line" id="L#{i}">#{i}</span>\n}
+        end
+        numbers << '</pre>'
 
         yield "<div#@css_class>" if @wrap
         yield '<table style="border-spacing: 0"><tbody><tr>'
