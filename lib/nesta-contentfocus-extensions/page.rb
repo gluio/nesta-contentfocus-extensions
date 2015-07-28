@@ -15,6 +15,7 @@ module Nesta
       {
         auto_id_stripping: true,
         auto_ids: true,
+        autolink: true,
         syntax_highlighter: :rouge,
         syntax_highlighter_opts: syntax_highlight_options
       }
