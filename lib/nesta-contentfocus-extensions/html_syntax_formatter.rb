@@ -2,7 +2,6 @@ require 'nesta-contentfocus-extensions/kramdown/kramdown'
 module Nesta
   module ContentFocus
     class HTMLSyntaxFormatter < ::Rouge::Formatters::HTML
-      attr_reader :options
 
       def stream_tableized(tokens)
         num_lines = 0
@@ -30,7 +29,8 @@ module Nesta
 
         numbers = '<pre class="lineno">'
         (@start_line..num_lines+@start_line-1).to_a.map do |i|
-          numbers << %Q{<span class="line" id="L#{i}">#{i}</span>\n}
+          text = %Q{<a href="#L#{i}">#{i}</a>}
+          numbers << %Q{<span class="line" id="L#{i}">#{text}</span>\n}
         end
         numbers << '</pre>'
 

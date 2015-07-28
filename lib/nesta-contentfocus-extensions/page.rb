@@ -20,16 +20,11 @@ module Nesta
       }
       #{
       #  autolink: true,
-      #  disable_indented_code_blocks: true,
-      #  fenced_code_blocks: true,
-      #  footnotes: true,
       #  highlight: true,
       #  no_intra_emphasis: true,
       #  quote: true,
       #  strikethrough: true,
-      #  syntax_highlighter: :rouge,
       #  superscript: true,
-      #  tables: true }
     end
 
     def syntax_highlight_options
