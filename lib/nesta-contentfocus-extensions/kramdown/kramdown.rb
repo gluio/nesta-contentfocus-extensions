@@ -23,7 +23,6 @@ require 'kramdown/parser/kramdown'
 module Nesta
   module ContentFocus
     class MarkdownParser < Kramdown::Parser::Kramdown
-
       def initialize(source, options)
         super
         @span_parsers.unshift(:highlight)
@@ -33,9 +32,8 @@ module Nesta
 
       def parse_highlight
         start_line_number = @src.current_line_number
-        saved_pos = @src.save_pos
-        result = @src.scan(HIGHLIGHT_START)
-        el = Element.new(:mark, nil, nil, :location => start_line_number)
+        @src.scan(HIGHLIGHT_START)
+        el = Element.new(:mark, nil, nil, location: start_line_number)
         stop_re = /#{Regexp.escape("==")}/
         parse_spans(el, stop_re) do
           (!@src.match?(/#{Regexp.escape("==")}[[:alnum:]]/)) && el.children.size > 0
@@ -52,16 +50,22 @@ module Kramdown
   module SyntaxHighlighter
     module Rouge
       def self.call(converter, text, lang, type, block_opts)
-        opts = converter.options[:syntax_highlighter_opts].dup
-        opts.merge!(block_opts)
+        opts = build_options(converter, type, block_opts)
         lexer = ::Rouge::Lexer.find_fancy(lang || opts[:default_lang], text)
         return nil unless lexer
+        format_klass = (opts.delete(:formatter) || ::Rouge::Formatters::HTML)
+        formatter = format_klass.new(opts)
+        formatter.format(lexer.lex(text))
+      end
+
+      def self.build_options(converter, type, block_opts)
+        opts = converter.options[:syntax_highlighter_opts].dup
+        opts.merge!(block_opts)
         if type == :span
           opts[:wrap] = false
           opts[:line_numbers] = false
         end
-        formatter = (opts.delete(:formatter) || ::Rouge::Formatters::HTML).new(opts)
-        formatter.format(lexer.lex(text))
+        opts
       end
     end
   end
@@ -79,59 +83,78 @@ module Kramdown
       alias_method :pre_headstartup_convert_highlight_code, :highlight_code
 
       def convert_ul(el, indent)
-        if ['benefits', 'how', 'features'].include? el.attr['class']
+        if %w(benefits how features).include? el.attr['class']
           el.children.each do |li|
-            p = li.children.detect{ |c| c.type == :p }
-            if p
-              img = p.children.detect{ |c| c.type == :img}
-              if img
-                description = Element.new(:html_element, 'div', :class => 'description')
-                example = Element.new(:html_element, 'div', :class => 'example')
-                p.children.delete(img)
-                example.children = [img]
-                description.children = li.children
-                li.children = [example, description]
-              end
-            end
+            build_product_layout(li)
           end
         end
-        output = pre_headstartup_convert_ul(el, indent)
-        output
+        pre_headstartup_convert_ul(el, indent)
+      end
+
+      def build_product_layout(li)
+        p = li.children.detect { |c| c.type == :p }
+        return unless p
+        img = p.children.detect { |c| c.type == :img }
+        return unless img
+        example = extract_example(p, img)
+        description = extract_description(li)
+        li.children = [example, description]
+      end
+
+      def extract_description(li)
+        description = Element.new(:html_element, 'div', class: 'description')
+        description.children = li.children
+        description
+      end
+
+      def extract_example(p, img)
+        example = Element.new(:html_element, 'div', class: 'example')
+        p.children.delete(img)
+        example.children = [img]
+        example
+      end
+
+      def mdash?(el)
+        el.type == :typographic_sym && el.value == :mdash
       end
 
       def convert_blockquote(el, indent)
-        if ['testimonial', 'cited'].include? el.attr['class']
-          p = el.children.detect{ |c| c.type == :p }
-          if p
-            mdash_idx = p.children.index{ |c| c.type == :typographic_sym && c.value == :mdash }
-            if mdash_idx
-              next_el = p.children[mdash_idx + 1]
-              p.children.delete_at(mdash_idx)
-              cite = Element.new(:html_element, 'cite')
-              cite.children = p.children.pop(p.children.size - mdash_idx)
-              p.children.push cite
-            end
-          end
+        if %w(testimonial cited).include? el.attr['class']
+          p = el.children.detect { |c| c.type == :p }
+          add_author_as_cite(p) if p
         end
-        output = pre_headstartup_convert_blockquote(el, indent)
+        pre_headstartup_convert_blockquote(el, indent)
+      end
+
+      def add_author_as_cite(paragraph)
+        mdash_idx = paragraph.children.index { |c| mdash?(c) }
+        return unless mdash_idx
+        el_count = paragraph.children.size
+        paragraph.children.delete_at(mdash_idx)
+        cite = Element.new(:html_element, 'cite')
+        cite.children = paragraph.children.pop(el_count - mdash_idx)
+        paragraph.children.push cite
       end
 
       def convert_header(el, indent)
         output = pre_headstartup_convert_header(el, indent)
-        matched, open, content, close = *output.match(%r{(.*<h[1-6][^>]*>)(.*)(</h[1-6]>)})
+        heading_regex = %r{(.*<h[1-6][^>]*>)(.*)(</h[1-6]>)}
+        _, open, content, close = *output.match(heading_regex)
         split_content = content.split(' ')
         if split_content.size > 3
-          split_content[-1] = [split_content[-2], '&nbsp;', split_content.pop].join
+          joined_words = [split_content[-2], '&nbsp;', split_content.pop].join
+          split_content[-1] = joined_words
           content = split_content.join(' ')
         end
         [open, content, close].join
       end
 
       def highlight_code(text, lang, type, opts = {})
-        opts[:block_id] = "-#{Digest::SHA1.hexdigest(text)[0...6]}-" if type == :block
+        if type == :block
+          opts[:block_id] = "-#{Digest::SHA1.hexdigest(text)[0...6]}-"
+        end
         pre_headstartup_convert_highlight_code(text, lang, type, opts)
       end
-
     end
 
     #  def block_code(code, language)
@@ -154,4 +177,3 @@ module Kramdown
     #  end
   end
 end
-
