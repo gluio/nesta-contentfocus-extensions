@@ -48,7 +48,7 @@ module Nesta
         numbers << '</pre>'
 
         yield "<div#@css_class>" if @wrap
-        yield '<table style="border-spacing: 0"><tbody><tr>'
+        yield %Q{<table style="border-spacing: 0" id="#{block_id.gsub("-","")}"><tbody><tr>}
 
         # the "gl" class applies the style for Generic.Lineno
         yield '<td class="gutter gl" style="text-align: right">'
