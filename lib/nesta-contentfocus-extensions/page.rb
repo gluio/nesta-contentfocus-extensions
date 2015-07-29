@@ -20,7 +20,7 @@ module Nesta
         syntax_highlighter_opts: syntax_highlight_options,
         input: 'Nesta::ContentFocus::MarkdownParser'
       }
-      #{
+      # {
       #  autolink: true,
       #  highlight: true,
       #  no_intra_emphasis: true,

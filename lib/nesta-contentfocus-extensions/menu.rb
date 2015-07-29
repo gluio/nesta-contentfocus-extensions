@@ -11,22 +11,42 @@ module Nesta
     def self.full_menu
       return @full_menu if @full_menu
       @full_menu = pre_contentfocus_full_menu
-      if @full_menu.empty?
-        menu_file = Tempfile.new('menu')
-        categories = Page.find_all.map(&:categories).flatten.compact.uniq
-        categories.sort_by!(&:abspath)
+      return @full_menu unless @full_menu.empty?
+      @full_menu = write_new_menu(categories)
+    end
+
+    def self.categories
+      return @categories if @categories
+      @categories = Page.find_all.map(&:categories).flatten.compact.uniq
+      @categories.sort_by!(&:abspath)
+      @categories
+    end
+
+    def self.write_new_menu(categories)
+      menu = []
+      with_menu_file do |menu_file|
         categories.each do |category|
-          menu_file.write(category.abspath + "\n")
-          category.pages.each do |sub_category|
-            menu_file.write(Nesta::Menu::INDENT + sub_category.abspath + "\n")
-          end
-        end.flatten
+          write_category_to_menu(category, menu_file)
+        end
         menu_file.rewind
-        append_menu_item(@full_menu, menu_file, 0)
-        menu_file.close
-        menu_file.unlink
+        append_menu_item([], menu_file, 0)
       end
-      @full_menu
+      menu
+    end
+
+    def self.write_category_to_menu(category, file, indent = '')
+      category_path = category.abspath
+      file.write(indent + category_path + "\n")
+      category.pages.each do |sub_category|
+        write_category_to_menu(sub_category, file, Nesta::Menu::INDENT)
+      end
+    end
+
+    def self.with_menu_file
+      menu_file = Tempfile.new('menu')
+      yield menu_file
+      menu_file.close
+      menu_file.unlink
     end
   end
 end
