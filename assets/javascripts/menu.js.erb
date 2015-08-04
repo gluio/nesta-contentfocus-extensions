@@ -1,0 +1,21 @@
+jQuery(window).scroll(function() {
+  var viewportTop = jQuery(window).scrollTop();
+  var viewportBottom = viewportTop + jQuery(window).height();
+  var visibleSections = jQuery.grep(jQuery('#content section'), function(el) {
+    var jEl = jQuery(el);
+    var elTop = jEl.position().top;
+    var elBottom = elTop + jEl.height();
+    var isStraddleViewport = (elTop < viewportTop) && (elBottom > viewportBottom);
+    var isWithinViewport = ((elBottom < viewportBottom) && (elBottom > viewportTop)) || ((elTop > viewportTop) && (elTop < viewportBottom));
+    return isStraddleViewport || isWithinViewport;
+  });
+  var mostLikelySection = jQuery(visibleSections[0]);
+  var currentSection = mostLikelySection.attr('id');
+  var menuTargetSelector = '.menu-'+currentSection;
+  if (jQuery(menuTargetSelector).hasClass('current')) {
+    // No-op, we've got the class
+  } else {
+    jQuery('.menu ul li.current').removeClass('current');
+    jQuery(menuTargetSelector).addClass('current');
+  }
+});
