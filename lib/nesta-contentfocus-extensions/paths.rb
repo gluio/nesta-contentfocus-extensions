@@ -62,7 +62,9 @@ module Nesta
         app_root = Nesta::Env.root
         asset_base = File.expand_path('../../assets', File.dirname(__FILE__))
         style_path = File.join(asset_base, 'stylesheets')
+        js_path = File.join(asset_base, 'javascripts')
         add_sass_path(style_path)
+        add_js_path(js_path)
         add_public_path(File.expand_path('public', app_root))
         add_view_path(File.expand_path('views', app_root))
         add_js_path(File.expand_path('public/javascripts', app_root))
