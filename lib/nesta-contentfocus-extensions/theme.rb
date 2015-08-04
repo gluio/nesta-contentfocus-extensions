@@ -7,10 +7,13 @@ module Nesta
           base_path = paths[:base]
           view_path = File.expand_path(base_path + '/views')
           stylesheet_path = File.expand_path(base_path + '/stylesheets')
+          javascript_path = File.expand_path(base_path + '/javascripts')
         end
         stylesheet_path = paths[:styles] if paths[:styles]
         view_path = paths[:views] if paths[:views]
+        javascript_path = paths[:scripts] if paths[:scripts]
         register_style_path(stylesheet_path)
+        register_js_path(javascript_path)
         register_view_path(name, view_path)
       end
 
