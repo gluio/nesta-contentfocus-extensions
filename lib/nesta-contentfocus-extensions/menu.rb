@@ -43,10 +43,9 @@ module Nesta
     end
 
     def self.with_menu_file
-      menu_file = Tempfile.new('menu')
+      menu_file = File.open(Nesta::Config.content_path('menu.txt'), 'w+')
       yield menu_file
       menu_file.close
-      menu_file.unlink
     end
   end
 end

@@ -16,6 +16,18 @@ module Nesta
         end
       end
 
+      def self.javascript_paths
+        lock.synchronize do
+          @js_paths || []
+        end
+      end
+
+      def self.sass_paths
+        lock.synchronize do
+          @sass_paths || []
+        end
+      end
+
       def self.add_public_path(path)
         lock.synchronize do
           @public_paths ||= []
@@ -30,7 +42,18 @@ module Nesta
         end
       end
 
+      def self.add_js_path(path)
+        lock.synchronize do
+          @js_paths ||= []
+          @js_paths.unshift(path)
+        end
+      end
+
       def self.add_sass_path(path)
+        lock.synchronize do
+          @sass_paths ||= []
+          @sass_paths.unshift(path)
+        end
         Sass.load_paths << path
         SassPaths.append(path)
       end
@@ -42,6 +65,7 @@ module Nesta
         add_sass_path(style_path)
         add_public_path(File.expand_path('public', app_root))
         add_view_path(File.expand_path('views', app_root))
+        add_js_path(File.expand_path('views/js', app_root))
       end
 
       def self.lock

@@ -20,6 +20,11 @@ module Nesta
         Paths.add_view_path(path)
       end
 
+      def register_js_path(path)
+        return unless path
+        Paths.add_js_path(path)
+      end
+
       def register_view_path(name, path)
         return unless path
         Paths.add_view_path(path)

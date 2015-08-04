@@ -8,6 +8,7 @@ require 'nesta-contentfocus-extensions/overrides'
 require 'nesta-contentfocus-extensions/page'
 require 'nesta-contentfocus-extensions/path'
 require 'nesta-contentfocus-extensions/paths'
+require 'nesta-contentfocus-extensions/rack'
 require 'nesta-contentfocus-extensions/routes'
 require 'nesta-contentfocus-extensions/theme'
 Nesta::ContentFocus::Paths.setup_base_app
