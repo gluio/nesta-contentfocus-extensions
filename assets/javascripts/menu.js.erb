@@ -1,6 +1,14 @@
 jQuery(window).scroll(function() {
   var viewportTop = jQuery(window).scrollTop();
   var viewportBottom = viewportTop + jQuery(window).height();
+
+  var menuContainer = jQuery('#menu');
+  var menuHeight = menuContainer.outerHeight(true);
+  var menuBottom = menuContainer.position().top + menuHeight;
+  if (menuHeight < jQuery(window).height()) {
+    menuContainer.css({ paddingTop: viewportTop + 'px' });
+  }
+
   var visibleSections = jQuery.grep(jQuery('#content section'), function(el) {
     var jEl = jQuery(el);
     var elTop = jEl.position().top;
