@@ -104,4 +104,6 @@ jQuery.fn.syntaxSelectable = function() {
   highlightFromUrl();
   addEvents();
 }
-jQuery('.hll').syntaxSelectable();
+jQuery(document).ready(function() {
+  jQuery('.hll').syntaxSelectable();
+});
