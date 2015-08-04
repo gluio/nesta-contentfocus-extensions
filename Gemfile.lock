@@ -5,20 +5,24 @@ PATH
       kramdown (~> 1.5.0)
       nesta (>= 0.11.0)
       rouge (~> 1.9.1)
+      sass (~> 3.4.16)
       sass_paths (~> 1.0.1)
       sinatra-flash (~> 0.3.0)
-      sprockets
+      sprockets (~> 3.2.0)
       tilt (~> 1.4.0)
+      uglifier (~> 0.5.4)
 
 GEM
   remote: https://rubygems.org/
   specs:
     RedCloth (4.2.9)
+    execjs (2.5.2)
     haml (4.1.0.beta.1)
       tilt
     haml-contrib (1.0.0.1)
       haml (>= 3.2.0.alpha.13)
     kramdown (1.5.0)
+    multi_json (1.11.2)
     nesta (0.11.1)
       RedCloth (~> 4.2)
       haml (>= 3.1)
@@ -46,6 +50,9 @@ GEM
     sprockets (3.2.0)
       rack (~> 1.0)
     tilt (1.4.1)
+    uglifier (0.5.4)
+      execjs (>= 0.3.0)
+      multi_json (>= 1.0.2)
 
 PLATFORMS
   ruby

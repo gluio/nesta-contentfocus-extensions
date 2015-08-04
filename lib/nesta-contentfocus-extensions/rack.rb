@@ -1,4 +1,6 @@
 require 'sprockets'
+require 'uglifier'
+require 'sass'
 require 'nesta-contentfocus-extensions/paths'
 module Nesta
   module ContentFocus
@@ -7,6 +9,8 @@ module Nesta
         context.instance_eval do
           map '/assets' do
             environment = Sprockets::Environment.new
+            environment.js_compressor  = :uglify
+            environment.css_compressor = :scss
             Nesta::ContentFocus::Paths.sass_paths.each do |path|
               environment.append_path path
             end
