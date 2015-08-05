@@ -7,6 +7,6 @@ jQuery(window).load(function() {
         var scrollTo = el.position().top - nav.height() - 33;
         jQuery('html, body').animate({ scrollTop: scrollTo }, 1000);
       }
-    }, 1000);
+    }, 10);
   }
 });
