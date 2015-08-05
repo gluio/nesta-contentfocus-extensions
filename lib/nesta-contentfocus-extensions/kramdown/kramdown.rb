@@ -42,6 +42,26 @@ module Nesta
         @tree.children << el
       end
       define_parser(:highlight, HIGHLIGHT_START, '==')
+
+
+      GFM_ATX_HEADER_START = /^\#{1,6}\s/
+      define_parser(:atx_header_gfm, GFM_ATX_HEADER_START, nil, 'parse_gfm_atx_header')
+
+      GFM_FENCED_CODEBLOCK_MATCH = /^(([~`]){3,})\s*?(\w[\w-]*)?\s*?\n(.*?)^\1\2*\s*?\n/m
+      def parse_gfm_codeblock_fenced
+        if @src.check(self.class::GFM_FENCED_CODEBLOCK_MATCH)
+          start_line_number = @src.current_line_number
+          @src.pos += @src.matched_size
+          el = new_block_el(:codeblock, @src[4], nil, :location => start_line_number)
+          lang = @src[3].to_s.strip
+          el.attr['class'] = "language-#{lang}" unless lang.empty?
+          @tree.children << el
+          true
+        else
+          false
+        end
+      end
+      define_parser(:codeblock_fenced_gfm, /^[~`]{3,}/, nil, 'parse_gfm_codeblock_fenced')
     end
   end
 end
