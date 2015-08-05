@@ -62,6 +62,8 @@ jQuery.fn.syntaxSelectable = function() {
       var exampleNo = matched[1], lineStart = matched[2], lineEnd = url.query.lineend;
       highlightLines(findMatchingLines(exampleNo, lineStart, lineEnd), true);
     }
+    var scrollTo = jQuery('.hll .highlight').offset().top - jQuery('header.navigation').height();
+    jQuery('html, body').animate({ scrollTop: scrollTo - 33 }, 1000);
   }
   var addEvents = function() {
     $block.find('.lineno a, .code pre > span').on({
