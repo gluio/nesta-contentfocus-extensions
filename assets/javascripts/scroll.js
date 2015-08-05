@@ -1,4 +1,4 @@
-jQuery(document).ready(function() {
+jQuery(window).load(function() {
   var nav = jQuery('header.navigation');
   if (location.hash && nav.length > 0) {
     setTimeout(function() {
