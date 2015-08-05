@@ -15,6 +15,10 @@ module Kramdown
       def convert_mark(el, indent)
         format_as_span_html(el.type, el.attr, inner(el, indent))
       end
+
+      def convert_s(el, indent)
+        format_as_span_html(el.type, el.attr, inner(el, indent))
+      end
     end
   end
 end
@@ -26,6 +30,7 @@ module Nesta
       def initialize(source, options)
         super
         @span_parsers.unshift(:highlight)
+        @span_parsers.unshift(:strikethrough)
         {:codeblock_fenced => :codeblock_fenced_gfm,
           :atx_header => :atx_header_gfm}.each do |current, replacement|
           i = @block_parsers.index(current)
@@ -35,7 +40,6 @@ module Nesta
       end
 
       HIGHLIGHT_START = /(?:==?)/
-
       def parse_highlight
         start_line_number = @src.current_line_number
         @src.scan(HIGHLIGHT_START)
@@ -54,6 +58,20 @@ module Nesta
 
       FENCED_CODEBLOCK_MATCH = /^(([~`]){3,})\s*?(\w[\w-]*)?\s*?\n(.*?)^\1\2*\s*?\n/m
       define_parser(:codeblock_fenced_gfm, /^[~`]{3,}/, nil, 'parse_codeblock_fenced')
+
+      STRIKETHROUGH_START = /~~/
+      def parse_strikethrough
+        start_line_number = @src.current_line_number
+        @src.scan(STRIKETHROUGH_START)
+        el = Element.new(:s, nil, nil, location: start_line_number)
+        stop_re = /#{Regexp.escape("~~")}/
+        parse_spans(el, stop_re) do
+          (!@src.match?(/#{Regexp.escape("~~")}[[:alnum:]]/)) && el.children.size > 0
+        end
+        @src.scan(stop_re)
+        @tree.children << el
+      end
+      define_parser(:strikethrough, STRIKETHROUGH_START, '~~')
     end
   end
 end
