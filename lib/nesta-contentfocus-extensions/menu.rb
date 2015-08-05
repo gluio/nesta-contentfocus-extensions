@@ -29,7 +29,7 @@ module Nesta
           write_category_to_menu(category, menu_file)
         end
         menu_file.rewind
-        append_menu_item([], menu_file, 0)
+        append_menu_item(menu, menu_file, 0)
       end
       menu
     end
