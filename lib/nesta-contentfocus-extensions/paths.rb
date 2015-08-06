@@ -69,6 +69,7 @@ module Nesta
         add_view_path(File.expand_path('views', app_root))
         add_js_path(File.expand_path('public/javascripts', app_root))
         add_js_path(File.expand_path('views/javascripts', app_root))
+        add_sass_path(File.expand_path('views/stylesheets', app_root))
       end
 
       def self.lock
