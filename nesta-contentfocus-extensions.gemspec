@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'nesta', '>= 0.11.0'
   spec.add_runtime_dependency 'gemoji-parser', '~> 1.3.1'
   spec.add_runtime_dependency 'kramdown', '~> 1.5.0'
+  spec.add_runtime_dependency 'neat', '~> 1.7.2'
   spec.add_runtime_dependency 'rouge', '~> 1.9.1'
   spec.add_runtime_dependency 'sass', '~> 3.4.16'
   spec.add_runtime_dependency 'sass_paths', '~> 1.0.1'
