@@ -1,0 +1,5 @@
+<% if ENV['SUMOME_SITE_ID'] %>
+  jQuery(document).ready(function() {
+    jQuery('body').append('<script src="//load.sumome.com/" data-sumo-site-id="<%=ENV['SUMOME_SITE_ID']%>" async="async"></script>');
+  });
+<% end %>
