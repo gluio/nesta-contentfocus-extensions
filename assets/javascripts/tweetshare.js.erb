@@ -1,0 +1,25 @@
+var tweetClick = function(ev) {
+  ev.stopPropagation();
+  ev.preventDefault();
+  var el = jQuery(ev.currentTarget);
+  var url = el.attr('href');
+  window.open(url, 'twitterwindow', 'height=450, width=550, top='+(jQuery(window).height()/2 - 225) +', left='+jQuery(window).width()/2 +', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+}
+var tweetButton = jQuery('<a href="https://twitter.com/share" class="twitter-share-button" target="_blank" data-via="<%=@twitter_handle || 'contentfocus'%>" data-related="contentfocus,getglu" data-count="none"></a>');
+jQuery('mark, blockquote p').each(function() {
+  var el = jQuery(this);
+  var strippedEl = el.clone().children('cite').remove().end();
+  var tweetText = strippedEl.text().trim().replace(/[\r\n ]+/g, " ").trim()
+  var thisTweetButton = tweetButton.clone();
+  thisTweetButton.attr('data-text', tweetText);
+  var queryString = jQuery.param(thisTweetButton.data());
+  var url = thisTweetButton.attr('href') + '?' + queryString;
+  thisTweetButton.attr('href', url);
+  thisTweetButton.click(tweetClick);
+  if (el.children('cite').length > 0) {
+    var cite = el.children('cite')[0];
+    thisTweetButton.insertBefore(cite);
+  } else {
+    el.append(thisTweetButton);
+  }
+});
