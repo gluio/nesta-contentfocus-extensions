@@ -1,4 +1,4 @@
-require 'tempfile'
+require 'fileutils'
 require 'tilt'
 require 'nesta/models'
 
@@ -43,6 +43,7 @@ module Nesta
     end
 
     def self.with_menu_file
+      FileUtils.mkdir_p(Nesta::Config.content_path)
       menu_file = File.open(Nesta::Config.content_path('menu.txt'), 'w+')
       yield menu_file
       menu_file.close
