@@ -159,8 +159,8 @@ module Kramdown
       def add_author_as_cite(paragraph)
         mdash_idx = paragraph.children.index { |c| mdash?(c) }
         return unless mdash_idx
-        el_count = paragraph.children.size
         paragraph.children.delete_at(mdash_idx)
+        el_count = paragraph.children.size
         cite = Element.new(:html_element, 'cite')
         cite.children = paragraph.children.pop(el_count - mdash_idx)
         paragraph.children.push cite
