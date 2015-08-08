@@ -1,0 +1,8 @@
+<% if ENV['WAITLISTED_DOMAIN'] %>
+  jQuery('body').append('<script src="//waitlisted.co/assets/embed.js"></script>');
+  jQuery(document).ready(function() {
+    document.addEventListener("DOMContentLoaded", function(event) {
+      window.waitlisted.start({domain: '<%=ENV['WAITLISTED_DOMAIN']%>'})
+    });
+  });
+<% end %>
