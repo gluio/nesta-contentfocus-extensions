@@ -17,6 +17,10 @@ module Nesta
       return metadata('Intro Image') if metadata('Intro Image')
     end
 
+    def canonical_url
+      return metadata('Canonical URL') if metadata('Canonical URL')
+    end
+
     def markdown_options
       {
         auto_id_stripping: true,
