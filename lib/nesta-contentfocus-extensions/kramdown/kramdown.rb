@@ -117,6 +117,10 @@ module Kramdown
           el.children.each do |li|
             build_product_layout(li)
           end
+        elsif el.attr['class'] == 'jobs'
+          el.children.each do |li|
+            build_jobs_to_be_done_layout(li)
+          end
         end
         pre_headstartup_convert_ul(el, indent)
       end
@@ -129,6 +133,29 @@ module Kramdown
         example = extract_example(p, img)
         description = extract_description(li)
         li.children = [example, description]
+      end
+
+      def build_jobs_to_be_done_layout(li)
+        img = li.children.detect { |c| c.type == :img }
+        li.children.delete(img)
+        heading = li.children.detect { |c| c.type == :header }
+        li.children.delete(heading)
+        p = li.children.detect { |c| c.type == :p }
+        li.children.delete(p)
+        link = p.children.detect { |c| c.type == :a }
+        p.children.delete(link)
+        p.children += link.children
+        children = []
+        if img
+          img_div = Element.new(:html_element, 'div', class: 'job-image')
+          img_div.children << img
+          childen << img_div
+        end
+        children << heading
+        children << p
+        children.compact!
+        link.children = children
+        li.children = [link]
       end
 
       def extract_description(li)
