@@ -152,7 +152,9 @@ module Kramdown
           childen << img_div
         end
         children << heading
-        children << p
+        copy_div = Element.new(:html_element, 'div', class: 'copy')
+        copy_div.children << p
+        children << copy_div
         children.compact!
         link.children = children
         li.children = [link]
