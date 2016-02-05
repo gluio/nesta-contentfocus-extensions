@@ -51,9 +51,7 @@ jQuery(document).ready(function() {
       return t;
     }(document, "script", "twitter-wjs"));
     twttr.ready = function() {
-      twttr.widgets.load(
-        document.getElementById("embedded-linkback-tweet")
-      );
+      twttr.widgets.load(document.getElementById("embedded-linkback-tweet"));
     }
   }
 });
