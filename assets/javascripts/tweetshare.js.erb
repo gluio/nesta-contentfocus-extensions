@@ -40,7 +40,6 @@ jQuery(document).ready(function() {
       if (d.getElementById(id)) return t;
       js = d.createElement(s);
       js.id = id;
-      js.async = true;
       js.src = "https://platform.twitter.com/widgets.js";
       fjs.parentNode.insertBefore(js, fjs);
 
@@ -51,8 +50,6 @@ jQuery(document).ready(function() {
 
       return t;
     }(document, "script", "twitter-wjs"));
-    twttr.ready = function() {
-      twttr.widgets.load(document.getElementById("embedded-linkback-tweet"));
-    }
+    twttr.widgets.load(document.getElementById("embedded-linkback-tweet"));
   }
 });
