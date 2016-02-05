@@ -1,3 +1,4 @@
+jQuery('head').append('<meta name="twitter:widgets:autoload" content="off">');
 jQuery(document).ready(function() {
   var tweetClick = function(ev) {
     ev.stopPropagation();
@@ -33,13 +34,12 @@ jQuery(document).ready(function() {
     }
   });
   if (jQuery('#embedded-linkback-tweet').length > 0) {
-    jQuery('head').append('<meta name="twitter:widgets:autoload" content="off">');
     window.twttr = (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0],
-        t = window.twttr || {};
+      var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {};
       if (d.getElementById(id)) return t;
       js = d.createElement(s);
       js.id = id;
+      js.async = true;
       js.src = "https://platform.twitter.com/widgets.js";
       fjs.parentNode.insertBefore(js, fjs);
 
@@ -50,6 +50,8 @@ jQuery(document).ready(function() {
 
       return t;
     }(document, "script", "twitter-wjs"));
-    twttr.widgets.load(document.getElementById("embedded-linkback-tweet"));
+    twttr.ready(function(twttr) {
+      twttr.widgets.load(document.getElementById("embedded-linkback-tweet"));
+    });
   }
 });
