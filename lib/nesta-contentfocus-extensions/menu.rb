@@ -23,15 +23,12 @@ module Nesta
     end
 
     def self.write_new_menu(categories)
-      menu = []
       with_menu_file do |menu_file|
         categories.each do |category|
           write_category_to_menu(category, menu_file)
         end
-        menu_file.rewind
-        append_menu_item(menu, menu_file, 0)
       end
-      menu
+      pre_contentfocus_full_menu
     end
 
     def self.write_category_to_menu(category, file, indent = '')
