@@ -8,6 +8,16 @@ module Nesta
             sheet = params[:splat].join('/')
             stylesheet(sheet.to_sym)
           end
+
+          get '*' do
+            set_common_variables
+            parts = params[:splat].map { |p| p.sub(/\/$/, '') }
+            @page = Nesta::Page.find_by_path(File.join(parts), params[:draft])
+            raise Sinatra::NotFound if @page.nil?
+            @title = @page.title
+            set_from_page(:description, :keywords)
+            haml(@page.template, layout: @page.layout)
+          end
         end
       end
     end

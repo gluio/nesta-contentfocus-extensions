@@ -9,6 +9,12 @@ module Nesta
       template.render(scope)
     end
 
+    def self.find_by_path(path, show_drafts = false)
+      page = load(path)
+      return page if show_drafts
+      page && page.hidden? ? nil : page
+    end
+
     def translate_emoji(text)
       EmojiParser.parse(text) { |emoji| emoji.raw  }
     end
