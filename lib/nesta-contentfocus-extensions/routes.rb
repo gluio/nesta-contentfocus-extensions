@@ -10,11 +10,9 @@ module Nesta
           end
 
           get '*' do
-            STDOUT.puts "Params:"
-            STDOUT.puts params.inspect
             set_common_variables
             parts = params[:splat].map { |p| p.sub(/\/$/, '') }
-            @page = Nesta::Page.find_by_path(File.join(parts), params[:draft])
+            @page = Nesta::Page.find_by_path(File.join(parts), params.key?(:draft))
             raise Sinatra::NotFound if @page.nil?
             @title = @page.title
             set_from_page(:description, :keywords)
