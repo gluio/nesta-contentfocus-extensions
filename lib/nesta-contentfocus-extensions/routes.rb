@@ -1,4 +1,3 @@
-Nesta::App.routes["GET"].delete(Nesta::App.routes["GET"].detect{|(path, *others)| path == /\A(.*?)\z/ })
 module Nesta
   module ContentFocus
     module Routes
@@ -11,6 +10,8 @@ module Nesta
           end
 
           get '*' do
+            STDOUT.puts "Params:"
+            STDOUT.puts params.inspect
             set_common_variables
             parts = params[:splat].map { |p| p.sub(/\/$/, '') }
             @page = Nesta::Page.find_by_path(File.join(parts), params[:draft])
