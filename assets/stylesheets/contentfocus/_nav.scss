@@ -100,7 +100,7 @@ header.navigation {
 
   // The nav items
 
-  ul li.nav-link {
+  ul > li {
     background: $navigation-background-color;
     display: block;
     line-height: $navigation-height;
