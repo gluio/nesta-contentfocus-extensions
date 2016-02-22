@@ -36,6 +36,7 @@ module Nesta
           end
 
           get '*' do
+            pass unless params.key?('draft')
             set_common_variables
             parts = params[:splat].map { |p| p.sub(/\/$/, '') }
             @page = Nesta::Page.find_by_path(File.join(parts), params.key?('draft'))
