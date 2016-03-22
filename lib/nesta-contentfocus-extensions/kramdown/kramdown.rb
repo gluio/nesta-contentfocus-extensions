@@ -178,11 +178,16 @@ module Kramdown
       end
 
       def convert_blockquote(el, indent)
+        add_embedded_tweet(el.children)
         if %w(testimonial cited).include? el.attr['class']
           p = el.children.detect { |c| c.type == :p }
           add_author_as_cite(p) if p
         end
         pre_headstartup_convert_blockquote(el, indent)
+      end
+
+      def add_embedded_tweet(nodes)
+        STDOUT.puts nodes.inspect
       end
 
       def add_author_as_cite(paragraph)
