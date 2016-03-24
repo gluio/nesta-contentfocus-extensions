@@ -205,7 +205,7 @@ module Kramdown
       def add_embedded_tweet(blockquote)
         paragraph = blockquote.children[0]
         link = paragraph.children[0].attr['href']
-        url = URI.parse("https://api.twitter.com/1/statuses/oembed.json?url=#{URI.encode(link)}")
+        url = URI.parse("https://api.twitter.com/1/statuses/oembed.json?omit_script=true&url=#{URI.encode(link)}")
         request = Net::HTTP::Get.new(url.request_uri)
         response = Net::HTTP.start(url.host, url.port, use_ssl: true ) { |http| http.request request }
         if response.code == "200"
