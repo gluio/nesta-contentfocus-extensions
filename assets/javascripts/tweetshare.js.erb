@@ -33,7 +33,7 @@ jQuery(document).ready(function() {
       });
     }
   });
-  if (jQuery('#embedded-linkback-tweet').length > 0) {
+  if (jQuery('#embedded-linkback-tweet, blockquote.twitter-tweet').length > 0) {
     window.twttr = (function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {};
       if (d.getElementById(id)) return t;
@@ -51,7 +51,9 @@ jQuery(document).ready(function() {
       return t;
     }(document, "script", "twitter-wjs"));
     twttr.ready(function(twttr) {
-      twttr.widgets.load(document.getElementById("embedded-linkback-tweet"));
+      jQuery('#embedded-linkback-tweet, blockquote.twitter-tweet').each(function() {
+        twttr.widgets.load(this);
+      });
     });
   }
 });
