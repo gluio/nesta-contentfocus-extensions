@@ -1,6 +1,5 @@
 jQuery('head').append('<meta name="twitter:widgets:autoload" content="off">');
 jQuery(document).ready(function() {
-  console.log('debugging Twitter issues')
   var tweetClick = function(ev) {
     ev.stopPropagation();
     ev.preventDefault();
@@ -35,7 +34,6 @@ jQuery(document).ready(function() {
     }
   });
   if (jQuery('#embedded-linkback-tweet, blockquote.twitter-tweet').length > 0) {
-    console.log('debugging Twitter issues - found elements')
     window.twttr = (function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {};
       if (d.getElementById(id)) return t;
@@ -53,7 +51,6 @@ jQuery(document).ready(function() {
       return t;
     }(document, "script", "twitter-wjs"));
     twttr.ready(function(twttr) {
-      console.log('debugging Twitter issues - twttr ready')
       jQuery('#embedded-linkback-tweet, blockquote.twitter-tweet').each(function() {
         twttr.widgets.load(this);
       });
