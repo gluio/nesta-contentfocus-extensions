@@ -1,3 +1,6 @@
+require 'net/http'
+require 'yajl'
+
 require 'digest/sha1'
 require 'rouge'
 require 'rouge/formatters/html_linewise'
@@ -178,16 +181,37 @@ module Kramdown
       end
 
       def convert_blockquote(el, indent)
-        add_embedded_tweet(el.children)
-        if %w(testimonial cited).include? el.attr['class']
-          p = el.children.detect { |c| c.type == :p }
-          add_author_as_cite(p) if p
+        if embedded_tweet?(el)
+          add_embedded_tweet(el)
+        else
+          if %w(testimonial cited).include? el.attr['class']
+            p = el.children.detect { |c| c.type == :p }
+            add_author_as_cite(p) if p
+          end
+          pre_headstartup_convert_blockquote(el, indent)
         end
-        pre_headstartup_convert_blockquote(el, indent)
       end
 
-      def add_embedded_tweet(nodes)
-        STDOUT.puts nodes.inspect
+      def embedded_tweet?(blockquote)
+        return false unless blockquote.children.size == 1
+        return false unless blockquote.children[0].type == :p
+        paragraph = blockquote.children[0]
+        return false unless paragraph.children.size == 1
+        link = paragraph.children[0].attr['href']
+        return false unless link =~ %r{\Ahttps://twitter\.com/.*/status/.*\z}
+        true
+      end
+
+      def add_embedded_tweet(blockquote)
+        paragraph = blockquote.children[0]
+        link = paragraph.children[0].attr['href']
+        url = URI.parse("https://api.twitter.com/1/statuses/oembed.json?url=#{URI.encode(link)}")
+        request = Net::HTTP::Get.new(url.request_uri)
+        response = Net::HTTP.start(url.host, url.port, use_ssl: true ) { |http| http.request request }
+        if response.code == "200"
+          results = Yajl::Parser.parse(response.body)
+          blockquote = results['html']
+        end
       end
 
       def add_author_as_cite(paragraph)
