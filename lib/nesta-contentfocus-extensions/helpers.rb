@@ -10,9 +10,8 @@ module Nesta
 
       def body_class
         classes = [@body_class]
-        flags = metadata('flags')
-        if @page && flags
-          classes += flags.split(',')
+        if @page && @page.metadata('flags')
+          classes += @page.metadata('flags').split(',')
           classes << 'bare' if @page.flagged_as? 'sign-up'
         end
         classes.compact.sort.uniq.join(' ')
