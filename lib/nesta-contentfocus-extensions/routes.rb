@@ -27,7 +27,6 @@ module Nesta
             raise Sinatra::NotFound if @page.nil?
             pass unless params.key?('draft') || @page.authentication?
             set_common_variables
-            STDOUT.puts @page.authentication?
             if @page.authentication? && !authenticated?(@page)
               session[:last_url] = request.fullpath
               redirect to('/login')
