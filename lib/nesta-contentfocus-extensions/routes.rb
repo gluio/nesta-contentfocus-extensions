@@ -13,12 +13,21 @@ module Nesta
             haml :login
           end
 
+          post '/login' do
+            page_url = session[:last_url]
+            session.delete(:last_url)
+            session[:passwords] ||= []
+            session[:passwords] << params[:password]
+            redirect to(page_url)
+          end
+
           get '*' do
-            pass unless params.key?('draft')
-            set_common_variables
             parts = params[:splat].map { |p| p.sub(/\/$/, '') }
             @page = Nesta::Page.find_by_path(File.join(parts), params.key?('draft'))
             raise Sinatra::NotFound if @page.nil?
+            pass unless params.key?('draft') || @page.authentication?
+            set_common_variables
+            STDOUT.puts @page.authentication?
             if @page.authentication? && !authenticated?(@page)
               session[:last_url] = request.fullpath
               redirect to('/login')

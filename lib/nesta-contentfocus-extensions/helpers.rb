@@ -3,6 +3,7 @@ module Nesta
   class App < Sinatra::Base
     helpers do
       def authenticated?(page)
+        return false if session[:passwords].nil? || session[:passwords].empty?
         page.passwords.detect do |password|
           session[:passwords].include? password
         end
