@@ -18,7 +18,7 @@ module Nesta
             session.delete(:last_url)
             session[:passwords] ||= []
             session[:passwords] << params[:password]
-            session[:password].uniq!
+            session[:passwords].uniq!
             redirect to(page_url)
           end
 
