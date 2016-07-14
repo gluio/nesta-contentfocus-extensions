@@ -2,6 +2,12 @@ require 'nesta-contentfocus-extensions/paths'
 module Nesta
   class App < Sinatra::Base
     helpers do
+      def authenticated?(page)
+        page.passwords.detect do |password|
+          session[:passwords].include? password
+        end
+      end
+
       def find_template(view_path, name, engine, &block)
         views = [view_path]
         views += Nesta::ContentFocus::Paths.view_paths

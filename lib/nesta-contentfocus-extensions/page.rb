@@ -19,6 +19,18 @@ module Nesta
       EmojiParser.parse(text) { |emoji| emoji.raw  }
     end
 
+    def authentication?
+      return true if metadata('Passwords')
+    end
+
+    def passwords
+      if metadata('Passwords')
+        metadata('Passwords').split(',').map{ |p| p.strip }
+      else
+        []
+      end
+    end
+
     def intro_image
       return metadata('Intro Image') if metadata('Intro Image')
     end

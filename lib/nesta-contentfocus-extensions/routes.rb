@@ -9,15 +9,24 @@ module Nesta
             stylesheet(sheet.to_sym)
           end
 
+          get '/login' do
+            haml :login
+          end
+
           get '*' do
             pass unless params.key?('draft')
             set_common_variables
             parts = params[:splat].map { |p| p.sub(/\/$/, '') }
             @page = Nesta::Page.find_by_path(File.join(parts), params.key?('draft'))
             raise Sinatra::NotFound if @page.nil?
-            @title = @page.title
-            set_from_page(:description, :keywords)
-            haml(@page.template, layout: @page.layout)
+            if @page.authentication? && !authenticated?(@page)
+              session[:last_url] = request.fullpath
+              redirect to('/login')
+            else
+              @title = @page.title
+              set_from_page(:description, :keywords)
+              haml(@page.template, layout: @page.layout)
+            end
           end
         end
       end
