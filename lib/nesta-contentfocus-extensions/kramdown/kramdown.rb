@@ -226,7 +226,7 @@ module Kramdown
           hash = Digest::MD5.hexdigest(name.attr['href'])
           author = Element.new(:html_element, 'span', class: 'person')
           avatar = Element.new(:html_element, 'img', class: 'avatar', src: "//www.gravatar.com/avatar/#{hash}")
-          author.push avatar
+          author.children.push avatar
           author.children.push name.children
           children.unshift(author)
         end
