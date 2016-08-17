@@ -220,7 +220,10 @@ module Kramdown
         paragraph.children.delete_at(mdash_idx)
         el_count = paragraph.children.size
         cite = Element.new(:html_element, 'cite')
-        cite.children = paragraph.children.pop(el_count - mdash_idx)
+        children = paragraph.children.pop(el_count - mdash_idx)
+        STDOUT.puts childrent.first.type
+        STDOUT.puts childrent.first.value
+        cite.children = children
         paragraph.children.push cite
       end
 

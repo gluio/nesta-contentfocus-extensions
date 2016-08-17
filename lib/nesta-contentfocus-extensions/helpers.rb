@@ -23,6 +23,13 @@ module Nesta
         end
         classes.compact.sort.uniq.join(' ')
       end
+
+      def gravatar(email)
+        if email
+          hash = Digest::MD5.hexdigest(email.downcase)
+          "//www.gravatar.com/avatar/#{hash}"
+        end
+      end
     end
   end
 end
