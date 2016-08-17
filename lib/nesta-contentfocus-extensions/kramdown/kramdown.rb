@@ -227,7 +227,7 @@ module Kramdown
           author = Element.new(:html_element, 'span', class: 'person')
           avatar = Element.new(:html_element, 'img', class: 'avatar', src: "//www.gravatar.com/avatar/#{hash}")
           author.children.push avatar
-          author.children.push name.children
+          author.children += name.children
           children.unshift(author)
         end
         cite.children = children
