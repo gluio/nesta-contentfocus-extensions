@@ -185,8 +185,10 @@ module Kramdown
           add_embedded_tweet(el)
         else
           if %w(testimonial cited).include? el.attr['class']
-            p = el.children.detect { |c| c.type == :p }
-            add_author_as_cite(p) if p
+            el.children.each do |child|
+              next unless child.type == :p
+              add_author_as_cite(child)
+            end
           end
           pre_headstartup_convert_blockquote(el, indent)
         end
