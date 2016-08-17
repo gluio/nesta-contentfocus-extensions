@@ -223,7 +223,8 @@ module Kramdown
         children = paragraph.children.pop(el_count - mdash_idx)
         if children.first.type == :a && children.first.attr['href'] =~ /@/
           name = children.shift
-          hash = Digest::MD5.hexdigest(name.attr['href'])
+          email = name.attr['href'].sub(/^mailto:/,'')
+          hash = Digest::MD5.hexdigest(email)
           author = Element.new(:html_element, 'span', class: 'person')
           avatar = Element.new(:html_element, 'img', class: 'avatar', src: "//www.gravatar.com/avatar/#{hash}")
           author.children.push avatar
