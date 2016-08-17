@@ -221,6 +221,7 @@ module Kramdown
         el_count = paragraph.children.size
         cite = Element.new(:html_element, 'cite')
         children = paragraph.children.pop(el_count - mdash_idx)
+        STDOUT.puts children.inspect
         STDOUT.puts children.first.type
         STDOUT.puts children.first.value
         cite.children = children
