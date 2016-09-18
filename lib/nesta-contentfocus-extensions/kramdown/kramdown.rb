@@ -251,6 +251,7 @@ module Kramdown
       end
 
       def highlight_code(text, lang, type, opts = {})
+        byebug
         if type == :block
           opts[:block_id] = "-#{Digest::SHA1.hexdigest(text)[0...6]}-"
         end
