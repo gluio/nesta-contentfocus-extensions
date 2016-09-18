@@ -59,7 +59,8 @@ module Nesta
       ATX_HEADER_START = /^\#{1,6}\s/
       define_parser(:atx_header_gfm, ATX_HEADER_START, nil, 'parse_atx_header')
 
-      FENCED_CODEBLOCK_MATCH = /^(([~`]){3,})\s*?(\w[\w-]*)?\s*?\n(.*?)^\1\2*\s*?\n/m
+      FENCED_CODEBLOCK_MATCH = /^(([~`]){3,})\s*?((\w[\w-]*)(?:\?\S*)?)?\s*?\n(.*?)^\1\2*\s*?\n/m
+
       define_parser(:codeblock_fenced_gfm, /^[~`]{3,}/, nil, 'parse_codeblock_fenced')
 
       STRIKETHROUGH_START = /~~/
@@ -251,7 +252,6 @@ module Kramdown
       end
 
       def highlight_code(text, lang, type, opts = {})
-        byebug
         if type == :block && text
           opts[:block_id] = "-#{Digest::SHA1.hexdigest(text)[0...6]}-"
         end
