@@ -11,7 +11,7 @@ module Nesta
 
       def find_template(view_path, name, engine, &block)
         views = [view_path]
-        views += Nesta::ContentFocus::Paths.view_paths
+        views.unshift(*Nesta::ContentFocus::Paths.view_paths)
         views.each { |v| super(v, name, engine, &block) }
       end
 
