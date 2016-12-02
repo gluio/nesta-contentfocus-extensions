@@ -35,6 +35,10 @@ module Nesta
       return metadata('Intro Image') if metadata('Intro Image')
     end
 
+    def intro_image_caption
+      return metadata('Intro Image Caption') if metadata('Intro Image Caption')
+    end
+
     def canonical_url
       return metadata('Canonical URL') if metadata('Canonical URL')
     end
