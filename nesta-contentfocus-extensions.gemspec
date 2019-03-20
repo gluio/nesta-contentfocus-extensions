@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'sass', '~> 3.4.16'
   spec.add_runtime_dependency 'sass_paths', '~> 1.0.1'
   spec.add_runtime_dependency 'sinatra-flash', '~> 0.3.0'
-  spec.add_runtime_dependency 'sprockets', '~> 3.2.0'
+  spec.add_runtime_dependency 'sprockets', '~> 3.7.2'
   spec.add_runtime_dependency 'tilt', '~> 2.0'
   spec.add_runtime_dependency 'uglifier', '~> 2.7.1'
 end
